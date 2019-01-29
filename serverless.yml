@@ -1,0 +1,52 @@
+service: CloudSinnBackend
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+custom: ${file(./src/env.yml)}
+
+package:
+  individually: true
+  exclude:
+    # since './**' does not work because of a (reported) bug
+    - ".idea/**"
+    - "./src/jwt-lambda-authorizer/package.json"
+    - "./src/jwt-lambda-authorizer/package-lock.json"
+    - "invoke-secured-lambda.sh"
+    - "src/env.yml"
+    - "README.md"
+
+functions:
+  CloudSinnLambdaAuthorizer:
+    handler: src/jwt-lambda-authorizer/index.handler
+    environment:
+      AUDIENCE: ${self:custom.AUDIENCE}
+      JWKS_URI: ${self:custom.JWKS_URI}
+      TOKEN_ISSUER: ${self:custom.TOKEN_ISSUER}
+
+  CloudSinnQueryDispatcher:
+    handler: src/dispatcher/index.handler
+    events:
+    - http:
+        path: dispatcher
+        method: get
+        authorizer:
+          name: CloudSinnLambdaAuthorizer
+          type: token
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: ^Bearer [-0-9a-zA-z\.]*$
+          resultTtlInSeconds: 3600
+
+  CloudSinnListStacks:
+    handler: src/stack/list_stacks.handler
+    events:
+    - http:
+        path: list-stacks
+        method: get
+        authorizer:
+          name: CloudSinnLambdaAuthorizer
+          type: token
+          identitySource: method.request.header.Authorization
+          identityValidationExpression: ^Bearer [-0-9a-zA-z\.]*$
+          resultTtlInSeconds: 3600
