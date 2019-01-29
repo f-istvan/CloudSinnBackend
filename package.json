@@ -1,0 +1,7 @@
+{
+  "name": "cloud-sinn",
+  "version": "1.0.0",
+  "devDependencies": {
+    "serverless-iam-roles-per-function": "1.0.4"
+  }
+}
