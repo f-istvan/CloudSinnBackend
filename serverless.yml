@@ -78,6 +78,17 @@ functions:
       Action: cloudformation:DescribeStacks
       Resource: "*"
 
+  CloudSinnTaskMonitor:
+    handler: src/ecs/task-monitor.handler
+    runtime: python3.6
+    iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+      - ecs:ListTasks
+      - ecs:DescribeTasks
+      - ecs:DescribeTaskDefinition
+      Resource: "*"
+
   CloudSinnNumberOfInstances:
     handler: src/ec2/number-of-instances.handler
     iamRoleStatements:
