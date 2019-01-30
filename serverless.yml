@@ -77,6 +77,14 @@ functions:
     - Effect: "Allow"
       Action: cloudformation:DescribeStacks
       Resource: "*"
+  
+  CloudSinnOttaDeveloperViolation:
+    runtime: python3.6
+    handler: src/iam/otta-developers.handler
+    iamRoleStatements:
+    - Effect: "Allow"
+      Action: iam:ListGroupsForUser
+      Resource: "*"
 
   CloudSinnNumberOfInstances:
     handler: src/ec2/number-of-instances.handler
