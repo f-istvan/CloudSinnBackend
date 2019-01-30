@@ -77,3 +77,10 @@ functions:
     - Effect: "Allow"
       Action: cloudformation:DescribeStacks
       Resource: "*"
+
+  CloudSinnNumberOfInstances:
+    handler: src/ec2/number-of-instances.handler
+    iamRoleStatements:
+    - Effect: "Allow"
+      Action: ec2:DescribeInstances
+      Resource: "*"
