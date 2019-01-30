@@ -5,6 +5,6 @@ echo
 curl -X GET \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer <TOKEN>" \
-      https://<API_URL>/dev/list-stacks
+     https://1w9xogmta5.execute-api.eu-west-1.amazonaws.com/dev/resources
 
 echo

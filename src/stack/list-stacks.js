@@ -11,8 +11,13 @@ module.exports.handler = (event, context, callback) => {
 	    console.log(err, err.stack);
 	    callback(err);
 	  } else {
-	    let stackNames = data['Stacks'].map(stack => stack['StackName']);
-	    callback(null, stackNames);
+          let stackNames = data['Stacks'].map(stack => stack['StackName']);
+          let result = {
+            "statusCode": 200,
+            "body": JSON.stringify(stackNames)
+          }
+
+	    callback(null, result);
 	  }
-	});
+	})
 };

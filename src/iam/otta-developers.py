@@ -21,4 +21,11 @@ def handler(event, context):
         if not otta_developer:
             security_violation_users.append(developer)
 
-    return security_violation_users
+    result = {
+        "NOT_INCLUDED_PEOPLE": {
+            "title": "Not in OttaDeveloper Group",
+            "usernames": security_violation_users
+        }
+    }
+
+    return result

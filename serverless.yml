@@ -33,6 +33,7 @@ functions:
 
   CloudSinnQueryDispatcher:
     handler: src/dispatcher/index.handler
+    runtime: python3.6
     events:
     - http:
         path: resources
@@ -43,6 +44,10 @@ functions:
           identitySource: method.request.header.Authorization
           identityValidationExpression: ^Bearer [-0-9a-zA-z\.]*$
           resultTtlInSeconds: 3600
+    iamRoleStatements:
+    - Effect: "Allow"
+      Action: lambda:InvokeFunction
+      Resource: "*"
 
   CloudSinnListStack:
     handler: src/stack/list-stacks.handler
