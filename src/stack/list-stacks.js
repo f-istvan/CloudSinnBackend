@@ -13,6 +13,10 @@ module.exports.handler = (event, context, callback) => {
 	  } else {
           let stackNames = data['Stacks'].map(stack => stack['StackName']);
           let result = {
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true
+            },
             "statusCode": 200,
             "body": JSON.stringify(stackNames)
           }

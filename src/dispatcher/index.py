@@ -41,6 +41,10 @@ def handler(event, context):
     res = {**res, **otta_developer_violation_invoke_response}
 
     result = {
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": True
+        },
         "statusCode": 200,
         "body": str(res)
     }
